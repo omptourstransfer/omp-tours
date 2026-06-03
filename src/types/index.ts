@@ -20,6 +20,8 @@ export interface Tour {
   offeredDaily?: boolean;
   rating: number;
   reviewCount: number;
+  minPeople?: number;
+  maxPeople?: number;
 }
 
 export type TourCategory =

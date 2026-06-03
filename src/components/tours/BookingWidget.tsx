@@ -20,12 +20,18 @@ export default function BookingWidget({ tour }: BookingWidgetProps) {
   const [date, setDate] = useState<Date | null>(null);
   const [pickupTime, setPickupTime] = useState<'9:00AM' | '2:00PM'>('9:00AM');
   const [guestName, setGuestName] = useState('');
-  const [adults, setAdults] = useState(1);
+  const [guestEmail, setGuestEmail] = useState('');
+  const [adults, setAdults] = useState(tour.minPeople ?? 1);
   const [showPayPal, setShowPayPal] = useState(false);
   const [bookingComplete, setBookingComplete] = useState(false);
   const [bookingRef, setBookingRef] = useState('');
   const { addToCart, isInCart } = useCart();
   const inCart = isInCart(tour.id);
+
+  const minPeople = tour.minPeople ?? 1;
+  const maxPeople = tour.maxPeople ?? 20;
+  const hasGroupLimit = !!(tour.minPeople || tour.maxPeople);
+  const groupValid = !hasGroupLimit || (adults >= minPeople && adults <= maxPeople);
 
   const fullPrice = tour.price;
   const depositPerPerson = Math.ceil(fullPrice * 0.15);
@@ -35,41 +41,61 @@ export default function BookingWidget({ tour }: BookingWidgetProps) {
   const totalDeposit = tour.isPackage ? depositPerPerson : depositPerPerson * adults;
   const totalFullPrice = tour.isPackage ? fullPrice : fullPrice * adults;
 
-  const canProceed = date && guestName.trim().length > 0;
+  const canProceed = date && guestName.trim().length > 0 && guestEmail.trim().length > 0 && groupValid;
 
   const generateBookingRef = () => {
     return 'OMP-' + Date.now().toString(36).toUpperCase();
   };
 
   const sendConfirmationEmail = async (ref: string) => {
-    // EmailJS integration (configure in .env)
     try {
       const emailjsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
       const emailjsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
       const emailjsPublicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+      const tourDateStr = date?.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      const adultsStr = tour.isPackage ? 'Package' : String(adults);
 
       if (emailjsServiceId && emailjsTemplateId && emailjsPublicKey) {
         const { default: emailjs } = await import('@emailjs/browser');
-        await emailjs.send(
-          emailjsServiceId,
-          emailjsTemplateId,
-          {
-            booking_ref: ref,
-            tour_name: tour.name,
-            tour_date: date?.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
-            pickup_time: pickupTime,
-            guest_name: guestName,
-            adults: tour.isPackage ? 'Package' : adults,
-            deposit_paid: `$${totalDeposit.toFixed(2)}`,
-            cash_balance: `$${cashBalance.toFixed(2)}`,
-            to_email: 'info@omptours-travel.com',
-          },
-          emailjsPublicKey
-        );
+        const payload = {
+          booking_ref: ref,
+          tour_name: tour.name,
+          tour_date: tourDateStr,
+          pickup_time: pickupTime,
+          guest_name: guestName,
+          guest_email: guestEmail,
+          adults: adultsStr,
+          deposit_paid: `$${totalDeposit.toFixed(2)}`,
+          cash_balance: `$${cashBalance.toFixed(2)}`,
+          to_email: 'info@omptours-travel.com',
+          reply_to: guestEmail,
+        };
+        // Send to Orlando
+        await emailjs.send(emailjsServiceId, emailjsTemplateId, payload, emailjsPublicKey);
+        // Send confirmation to customer
+        await emailjs.send(emailjsServiceId, emailjsTemplateId, { ...payload, to_email: guestEmail }, emailjsPublicKey);
       }
     } catch {
-      // Email sending is non-critical
+      // Email non-critical
     }
+  };
+
+  const sendWhatsAppConfirmation = (ref: string) => {
+    const tourDateStr = date?.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    const msg = encodeURIComponent(
+      `🌴 *New Booking – OMP Tours & Transfers*\n\n` +
+      `📋 Ref: ${ref}\n` +
+      `🗺️ Tour: ${tour.name}\n` +
+      `📅 Date: ${tourDateStr}\n` +
+      `⏰ Pickup: ${pickupTime}\n` +
+      `👤 Name: ${guestName}\n` +
+      `📧 Email: ${guestEmail}\n` +
+      `👥 Guests: ${tour.isPackage ? 'Package' : adults}\n\n` +
+      `💳 Deposit paid (PayPal): $${totalDeposit.toFixed(2)}\n` +
+      `💵 Balance due in cash on tour day: $${cashBalance.toFixed(2)}\n\n` +
+      `Please confirm this booking. Thank you!`
+    );
+    window.open(`https://wa.me/18094312542?text=${msg}`, '_blank');
   };
 
   return (
@@ -92,16 +118,38 @@ export default function BookingWidget({ tour }: BookingWidgetProps) {
             </h3>
             <p className="text-[#00C9A7] font-bold text-sm mb-1">Reference: {bookingRef}</p>
             <p className="text-white/60 text-sm mb-4">
-              A confirmation has been sent to your email. Our team will be in touch to confirm your pickup details.
+              A confirmation has been sent to <strong className="text-white">{guestEmail}</strong>. Please read the details below carefully.
             </p>
-            <div className="glass rounded-xl p-4 text-left space-y-2 mb-4">
+            <div className="glass rounded-xl p-4 text-left space-y-2 mb-3">
               <p className="text-white/80 text-sm"><strong className="text-white">Tour:</strong> {tour.name}</p>
               <p className="text-white/80 text-sm"><strong className="text-white">Date:</strong> {date?.toLocaleDateString('en-US', { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric' })}</p>
               <p className="text-white/80 text-sm"><strong className="text-white">Pickup:</strong> {pickupTime}</p>
               <p className="text-white/80 text-sm"><strong className="text-white">Name:</strong> {guestName}</p>
-              <p className="text-[#F0A500] text-sm font-semibold"><strong>Balance due in cash:</strong> ${cashBalance.toFixed(2)}</p>
+              <p className="text-white/80 text-sm"><strong className="text-white">Guests:</strong> {tour.isPackage ? 'Package' : adults}</p>
             </div>
-            <p className="text-white/50 text-xs">Questions? WhatsApp us at +1 (809) 431-2542</p>
+            <div className="glass rounded-xl p-4 text-left space-y-2 mb-3 border border-[#00C9A7]/30">
+              <p className="text-[#00C9A7] text-xs font-bold uppercase tracking-wider mb-1">Payment Summary</p>
+              <div className="flex justify-between text-sm">
+                <span className="text-white/60">✅ Deposit paid (PayPal):</span>
+                <span className="text-[#00C9A7] font-bold">${totalDeposit.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between text-sm border-t border-white/10 pt-2 mt-1">
+                <span className="text-white/80">💵 Balance due in CASH on tour day:</span>
+                <span className="text-[#F0A500] font-bold text-base">${cashBalance.toFixed(2)}</span>
+              </div>
+            </div>
+            <div className="bg-[#F0A500]/10 border border-[#F0A500]/30 rounded-xl p-3 mb-3">
+              <p className="text-[#F0A500] text-xs font-semibold">⚠️ Important: You still owe <strong>${cashBalance.toFixed(2)}</strong> in cash, paid directly to your guide on the day of the tour. The ${totalDeposit.toFixed(2)} online was only a deposit to confirm your spot.</p>
+            </div>
+            <a
+              href={`https://wa.me/18094312542?text=${encodeURIComponent(`Hi! I just booked ${tour.name} (Ref: ${bookingRef}) for ${date?.toLocaleDateString('en-US')} at ${pickupTime}. My name is ${guestName}. Please confirm!`)}`}
+              target="_blank"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold mb-2"
+              style={{ background: 'rgba(37,211,102,0.15)', border: '1px solid rgba(37,211,102,0.4)', color: '#25D366' }}
+            >
+              💬 Confirm on WhatsApp
+            </a>
+            <p className="text-white/40 text-xs text-center">Questions? +1 (809) 431-2542</p>
           </motion.div>
         ) : (
           <>
@@ -207,28 +255,60 @@ export default function BookingWidget({ tour }: BookingWidgetProps) {
                 </div>
               </div>
 
+              {/* Email */}
+              <div>
+                <label className="text-[#00C9A7] text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <User size={12} />
+                  * Your Email (for confirmation)
+                </label>
+                <input
+                  type="email"
+                  value={guestEmail}
+                  onChange={(e) => setGuestEmail(e.target.value)}
+                  placeholder="your@email.com"
+                  className="w-full bg-[#EEF4F8] border border-black/[0.08] hover:border-[#009B89]/50 focus:border-[#009B89] text-[#0A1F35] text-sm px-4 py-3 rounded-xl outline-none transition-colors placeholder:text-[#0A1F35]/30"
+                />
+              </div>
+
               {/* Adults */}
               {!tour.isPackage && (
                 <div>
                   <label className="text-[#00C9A7] text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <Users size={12} />
                     * How many adult/s?
+                    {hasGroupLimit && (
+                      <span className="text-white/40 font-normal normal-case tracking-normal ml-1">
+                        ({minPeople}–{maxPeople} people)
+                      </span>
+                    )}
                   </label>
                   <div className="flex items-center gap-4">
                     <button
-                      onClick={() => setAdults(Math.max(1, adults - 1))}
+                      onClick={() => setAdults(Math.max(minPeople, adults - 1))}
                       className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#00C9A7]/20 text-white font-bold text-xl transition-colors flex items-center justify-center"
                     >
                       −
                     </button>
                     <span className="text-white font-bold text-xl w-8 text-center">{adults}</span>
                     <button
-                      onClick={() => setAdults(Math.min(20, adults + 1))}
+                      onClick={() => setAdults(Math.min(maxPeople, adults + 1))}
                       className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#00C9A7]/20 text-white font-bold text-xl transition-colors flex items-center justify-center"
                     >
                       +
                     </button>
                   </div>
+                  {hasGroupLimit && !groupValid && (
+                    <div className="mt-2 flex items-start gap-2 bg-red-500/10 border border-red-500/30 rounded-xl p-3">
+                      <AlertCircle size={14} className="text-red-400 flex-shrink-0 mt-0.5" />
+                      <p className="text-red-300 text-xs">
+                        This tour requires a minimum of <strong>{minPeople}</strong> and maximum of <strong>{maxPeople}</strong> people.
+                        Please <a href="https://wa.me/18094312542" target="_blank" className="underline text-red-300">contact us on WhatsApp</a> to arrange a private tour for smaller groups.
+                      </p>
+                    </div>
+                  )}
+                  {hasGroupLimit && groupValid && (
+                    <p className="text-white/40 text-xs mt-1.5">✓ Group size confirmed ({adults} people)</p>
+                  )}
                 </div>
               )}
 
@@ -262,8 +342,12 @@ export default function BookingWidget({ tour }: BookingWidgetProps) {
               {!showPayPal ? (
                 <button
                   onClick={() => {
-                    if (!canProceed) {
-                      toast.error('Please select a date and enter your name');
+                    if (!date || !guestName.trim() || !guestEmail.trim()) {
+                      toast.error('Please fill in date, name and email');
+                      return;
+                    }
+                    if (!groupValid) {
+                      toast.error(`This tour requires ${minPeople}–${maxPeople} people`);
                       return;
                     }
                     setShowPayPal(true);
@@ -306,6 +390,7 @@ export default function BookingWidget({ tour }: BookingWidgetProps) {
                         const ref = generateBookingRef();
                         setBookingRef(ref);
                         await sendConfirmationEmail(ref);
+                        sendWhatsAppConfirmation(ref);
                         setBookingComplete(true);
                         toast.success('Booking confirmed! Check your email.');
                       }
