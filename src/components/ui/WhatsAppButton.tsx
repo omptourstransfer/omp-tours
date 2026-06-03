@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 export default function WhatsAppButton() {
   const whatsappNumber = '18094312542';
   const message = encodeURIComponent(
-    'Hello! I\'m interested in booking a tour with OMP Tours & Transfer. Can you help me?'
+    'Hello! I\'m interested in booking a tour with OMP Tours & Transfers Can you help me?'
   );
 
   return (

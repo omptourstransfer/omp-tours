@@ -212,7 +212,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="pt-5 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-white/40 text-sm">
-            © {new Date().getFullYear()} OMP Tours & Transfer. All rights reserved.
+            © {new Date().getFullYear()} OMP Tours & Transfers All rights reserved.
           </p>
           <div className="flex gap-6">
             <Link href="/privacy-policy" className="text-white/40 text-sm hover:text-[#00C9A7] transition-colors">

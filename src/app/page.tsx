@@ -10,9 +10,9 @@ import FAQ from '@/components/home/FAQ';
 import ContactSection from '@/components/home/ContactSection';
 
 export const metadata: Metadata = {
-  title: 'OMP Tours & Transfer | Best Punta Cana Excursions 2025',
+  title: 'OMP Tours & Transfers| Best Punta Cana Excursions 2025',
   description:
-    'Book the best Punta Cana excursions with OMP Tours & Transfer. 31 tours including Saona Island, buggies, whale watching, scuba diving & more. Only 15% deposit online!',
+    'Book the best Punta Cana excursions with OMP Tours & Transfers 31 tours including Saona Island, buggies, whale watching, scuba diving & more. Only 15% deposit online!',
 };
 
 export default function HomePage() {

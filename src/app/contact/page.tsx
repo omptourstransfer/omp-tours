@@ -256,7 +256,7 @@ export default function ContactPage() {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="OMP Tours & Transfer - Higüey, Dominican Republic"
+                title="OMP Tours & Transfers- Higüey, Dominican Republic"
               />
             </div>
           </motion.div>

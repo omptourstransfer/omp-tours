@@ -52,7 +52,7 @@ export default function Navbar() {
                   style={{ border: '2px solid rgba(201,168,76,0.4)', boxShadow: '0 0 12px rgba(201,168,76,0.25)' }}>
                   <Image
                     src="/logoomp.JPG"
-                    alt="OMP Tours & Transfer"
+                    alt="OMP Tours & Transfers
                     width={44}
                     height={44}
                     className="w-full h-full object-cover"
