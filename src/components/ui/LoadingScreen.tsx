@@ -155,7 +155,7 @@ export default function LoadingScreen() {
               className="font-bold text-white text-2xl mb-1 tracking-wide"
               style={{ fontFamily: 'Playfair Display, serif', textShadow: '0 0 30px rgba(0,201,177,0.3)' }}
             >
-              OMP Tours &amp; Transfer
+              OMP Tours &amp; Transfers
             </motion.h1>
 
             {/* Tagline character reveal */}

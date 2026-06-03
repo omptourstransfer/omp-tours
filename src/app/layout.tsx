@@ -10,8 +10,8 @@ const OG_IMAGE  = `${SITE_URL}/hero-bg.jpg`;
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'OMP Tours & Transfers| Best Punta Cana Excursions 2025',
-    template: '%s | OMP Tours & Transfers,
+    default: 'OMP Tours & Transfers | Best Punta Cana Excursions 2025',
+    template: '%s | OMP Tours & Transfers',
   },
   description:
     'Book the best Punta Cana excursions with OMP Tours & Transfers Saona Island tours, buggy adventures, ATV, whale watching, scuba diving & 31 more. Only 15% deposit online. Hotel pickup included. 5-star rated by 10,000+ guests.',
@@ -39,17 +39,17 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: SITE_URL },
   openGraph: {
-    title: 'OMP Tours & Transfers| Best Punta Cana Excursions 2025',
+    title: 'OMP Tours & Transfers | Best Punta Cana Excursions 2025',
     description: 'Book 31 handcrafted Punta Cana tours. Saona Island, buggies, ATV, whale watching & more. Only 15% deposit — hotel pickup included!',
     url: SITE_URL,
-    siteName: 'OMP Tours & Transfers,
+    siteName: 'OMP Tours & Transfers',
     locale: 'en_US',
-    images: [{ url: OG_IMAGE, width: 1440, height: 900, alt: 'OMP Tours & Transfers– Punta Cana Excursions' }],
+    images: [{ url: OG_IMAGE, width: 1440, height: 900, alt: 'OMP Tours & Transfers – Punta Cana Excursions' }],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'OMP Tours & Transfers| Best Punta Cana Excursions 2025',
+    title: 'OMP Tours & Transfers | Best Punta Cana Excursions 2025',
     description: 'Book 31 Punta Cana tours — only 15% deposit online! Saona Island, buggies, ATV, whale watching & more.',
     images: [OG_IMAGE],
   },
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'TouristInformationCenter',
-  name: 'OMP Tours & Transfers,
+  name: 'OMP Tours & Transfers',
   alternateName: 'OMP Tours and Transfer',
   description: 'Best Punta Cana excursions — Saona Island tours, buggy adventures, ATV, whale watching, scuba diving & 31 more. 5-star rated, hotel pickup included.',
   url: SITE_URL,

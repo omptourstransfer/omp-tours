@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const tour = getTourBySlug(params.slug);
   if (!tour) return {};
   return {
-    title: `${tour.name} | OMP Tours & Transfers,
+    title: `${tour.name} | OMP Tours & Transfers`,
     description: tour.shortDescription,
     openGraph: {
       images: [{ url: tour.image, width: 394, height: 394, alt: tour.name }],

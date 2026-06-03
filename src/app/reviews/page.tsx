@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Star, Quote } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Reviews | OMP Tours & Transfers,
+  title: 'Reviews | OMP Tours & Transfers',
   description: 'Read what 10,000+ happy guests say about OMP Tours & Transfers 5-star reviews from travelers worldwide.',
 };
 

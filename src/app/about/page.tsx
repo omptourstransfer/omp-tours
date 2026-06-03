@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { Star, Users, MapPin, Award, Heart } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'About Us | OMP Tours & Transfers,
+  title: 'About Us | OMP Tours & Transfers',
   description:
-    'Meet Orlando and the OMP Tours & Transfersteam. Your local experts for unforgettable Punta Cana excursions and Dominican Republic adventures.',
+    'Meet Orlando and the OMP Tours & Transfers team. Your local experts for unforgettable Punta Cana excursions and Dominican Republic adventures.',
 };
 
 const values = [
@@ -32,7 +32,7 @@ export default function AboutPage() {
             className="text-5xl md:text-6xl font-bold text-white mb-4"
             style={{ fontFamily: 'Playfair Display, serif' }}
           >
-            About OMP Tours &amp; Transfer
+            About OMP Tours &amp; Transfers
           </h1>
           <p className="text-white/60 text-lg">
             Born from a love of the Dominican Republic and a passion for authentic travel experiences.
@@ -78,7 +78,7 @@ export default function AboutPage() {
                 <strong className="text-white">¡Hola!</strong> I&apos;m Orlando — your local guide, travel planner, and friend in the Dominican Republic. I&apos;m the best champagne popper here!
               </p>
               <p>
-                I started OMP Tours & Transferswith one goal in mind: to give visitors more than just a vacation. I wanted to create real, personalized experiences that reflect the vibrant beauty, culture, and warmth of Punta Cana excursions and beyond.
+                I started OMP Tours & Transfers with one goal in mind: to give visitors more than just a vacation. I wanted to create real, personalized experiences that reflect the vibrant beauty, culture, and warmth of Punta Cana excursions and beyond.
               </p>
               <p>
                 With years of experience and deep local knowledge, I&apos;ve had the pleasure of showing travelers from all over the world the hidden gems of our Caribbean paradise — from the pristine beaches of Saona Island to the dramatic vistas of Montaña Redonda.
@@ -114,12 +114,12 @@ export default function AboutPage() {
             className="text-3xl font-bold text-white mb-6 text-center"
             style={{ fontFamily: 'Playfair Display, serif' }}
           >
-            OMP Tours &amp; Transfer
+            OMP Tours &amp; Transfers
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-white/70 leading-relaxed">
             <div className="space-y-4">
               <p>
-                OMP Tours & Transfersis your trusted partner for unforgettable excursions and travel experiences in the Dominican Republic. We offer carefully selected tours, adventure activities, and local experiences at the best prices.
+                OMP Tours & Transfers is your trusted partner for unforgettable excursions and travel experiences in the Dominican Republic. We offer carefully selected tours, adventure activities, and local experiences at the best prices.
               </p>
               <p>
                 Based in Higüey — right in the heart of the Punta Cana region — we are perfectly positioned to offer the most convenient, efficient, and authentic tour experiences available. We know every road, every beach, and every hidden gem.

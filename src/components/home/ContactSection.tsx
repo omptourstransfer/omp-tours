@@ -122,7 +122,7 @@ export default function ContactSection() {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="OMP Tours & TransfersLocation"
+              title="OMP Tours & Transfers Location"
             />
           </motion.div>
         </div>
