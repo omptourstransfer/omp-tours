@@ -94,7 +94,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                             alt={item.tour.name}
                             fill
                             className="object-cover"
-                            unoptimized
+
                           />
                         </div>
 

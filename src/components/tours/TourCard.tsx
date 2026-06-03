@@ -42,7 +42,7 @@ export default function TourCard({ tour, index = 0 }: TourCardProps) {
           fill
           className="object-cover group-hover:scale-110 transition-transform duration-700"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          unoptimized
+
         />
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#030C18] via-transparent to-transparent opacity-0 group-hover:opacity-90 transition-opacity duration-300" />

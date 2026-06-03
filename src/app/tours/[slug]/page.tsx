@@ -69,7 +69,7 @@ export default function TourPage({ params }: Props) {
                 fill
                 className="object-cover"
                 priority
-                unoptimized
+
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#071929]/60 to-transparent" />
 

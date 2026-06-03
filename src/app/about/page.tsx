@@ -51,7 +51,7 @@ export default function AboutPage() {
                 alt="Orlando - OMP Tours founder"
                 fill
                 className="object-cover object-top"
-                unoptimized
+
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#071929] via-transparent to-transparent" />
             </div>
