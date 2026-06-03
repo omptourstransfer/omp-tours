@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <radialGradient id="goldGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F5D06E"/>
+      <stop offset="50%" stop-color="#C9A84C"/>
+      <stop offset="100%" stop-color="#A07828"/>
+    </radialGradient>
+    <radialGradient id="goldGrad2" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#F5D06E"/>
+      <stop offset="100%" stop-color="#8B6914"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Sun rays spikes around the circle -->
+  <g transform="translate(100,100)" fill="url(#goldGrad)">
+    <!-- 16 spikes -->
+    <polygon points="0,-90 4,-72 -4,-72"/>
+    <polygon points="35,-84 34,-66 27,-71" transform="rotate(22.5)"/>
+    <polygon points="64,-64 57,-50 50,-57" transform="rotate(45)"/>
+    <polygon points="84,-35 70,-34 71,-27" transform="rotate(67.5)"/>
+    <polygon points="90,0 72,-4 72,4"/>
+    <polygon points="84,35 71,27 70,34" transform="rotate(-22.5) scale(1,-1)"/>
+    <polygon points="64,64 50,57 57,50" transform="rotate(-45) scale(1,-1)"/>
+    <polygon points="35,84 27,71 34,66" transform="rotate(-67.5) scale(1,-1)"/>
+    <polygon points="0,90 -4,72 4,72"/>
+    <polygon points="-35,84 -34,66 -27,71" transform="rotate(22.5) scale(-1,1)"/>
+    <polygon points="-64,64 -57,50 -50,57" transform="rotate(45) scale(-1,1)"/>
+    <polygon points="-84,35 -70,34 -71,27" transform="rotate(67.5) scale(-1,1)"/>
+    <polygon points="-90,0 -72,4 -72,-4"/>
+    <polygon points="-84,-35 -71,-27 -70,-34" transform="rotate(-22.5) scale(-1,-1)"/>
+    <polygon points="-64,-64 -50,-57 -57,-50" transform="rotate(-45) scale(-1,-1)"/>
+    <polygon points="-35,-84 -27,-71 -34,-66" transform="rotate(-67.5) scale(-1,-1)"/>
+  </g>
+
+  <!-- Outer ring -->
+  <circle cx="100" cy="100" r="68" fill="none" stroke="url(#goldGrad)" stroke-width="3"/>
+
+  <!-- Inner circle fill -->
+  <circle cx="100" cy="100" r="64" fill="#1A1200" opacity="0.85"/>
+
+  <!-- Inner ring -->
+  <circle cx="100" cy="100" r="58" fill="none" stroke="url(#goldGrad2)" stroke-width="1.5"/>
+
+  <!-- Eiffel tower / landmark shape in center -->
+  <g transform="translate(100,100)" fill="url(#goldGrad)">
+    <!-- Tower base legs -->
+    <polygon points="-18,28 -12,28 -4,0 4,0 12,28 18,28 22,32 -22,32"/>
+    <!-- Tower middle -->
+    <rect x="-6" y="-5" width="12" height="5" rx="1"/>
+    <!-- Tower top -->
+    <polygon points="-4,-5 4,-5 2,-22 -2,-22"/>
+    <!-- Top spire -->
+    <rect x="-1" y="-28" width="2" height="8"/>
+    <!-- Mid arch -->
+    <path d="M-14,10 Q0,2 14,10" stroke="url(#goldGrad)" stroke-width="1.5" fill="none"/>
+  </g>
+
+  <!-- Lion head small above tower -->
+  <g transform="translate(100,68)" fill="url(#goldGrad)">
+    <ellipse cx="0" cy="0" rx="7" ry="6"/>
+    <!-- mane suggestion -->
+    <circle cx="0" cy="0" r="9" fill="none" stroke="url(#goldGrad)" stroke-width="1.5"/>
+    <circle cx="-3" cy="-1" r="1.2"/>
+    <circle cx="3" cy="-1" r="1.2"/>
+    <line x1="-2" y1="2" x2="2" y2="2" stroke="#1A1200" stroke-width="1"/>
+  </g>
+
+  <!-- O and M and P letters -->
+  <text x="100" y="152" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="700" fill="url(#goldGrad)" letter-spacing="6">OMP</text>
+</svg>

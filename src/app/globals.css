@@ -1,0 +1,296 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,600&family=Nunito:wght@300;400;500;600;700;800&display=swap');
+
+/* ── DEEP OCEAN CARIBBEAN PALETTE ────────────────────── */
+:root {
+  --bg:        #071A2D;
+  --bg-deep:   #030C18;
+  --bg-raised: #0C2642;
+  --bg-inset:  #051525;
+
+  --gold:      #C9A84C;
+  --gold-lt:   #E8C96A;
+  --gold-dk:   #9A7828;
+
+  --teal:      #00C9B1;
+  --teal-lt:   #00EDD1;
+  --teal-dk:   #009B89;
+
+  --ocean:     #0096C7;
+  --ocean-lt:  #00B4D8;
+  --ocean-dk:  #0077B6;
+
+  --neo-light: rgba(0,150,199,0.07);
+  --neo-dark:  rgba(0,0,0,0.65);
+
+  --font-playfair: 'Playfair Display', serif;
+  --font-nunito:   'Nunito', sans-serif;
+}
+
+/* ── BASE ─────────────────────────────────────────────── */
+* { box-sizing: border-box; padding: 0; margin: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-nunito);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 40% at 20% 0%, rgba(0,150,199,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 30% at 80% 100%, rgba(0,201,177,0.06) 0%, transparent 50%);
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* ── SCROLLBAR ────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+/* ── NEOMORPHIC CARDS ─────────────────────────────────── */
+.neo-card {
+  background: var(--bg-raised);
+  border-radius: 20px;
+  box-shadow:
+     8px  8px 20px var(--neo-dark),
+    -4px -4px 12px rgba(0,150,199,0.08),
+     0 0 0 1px rgba(0,201,177,0.10) inset;
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+}
+.neo-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    14px 14px 32px var(--neo-dark),
+    -5px -5px 16px rgba(0,150,199,0.12),
+     0   0   0 1px rgba(0,201,177,0.30) inset,
+     0   0  28px rgba(0,150,199,0.10);
+}
+
+/* ── GLASSMORPHISM ─────────────────────────────────────── */
+.glass {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.glass-gold {
+  background: rgba(201,168,76,0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(201,168,76,0.25);
+}
+.glass-dark {
+  background: rgba(7,26,45,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0,201,177,0.18);
+}
+
+/* ── BUTTONS ──────────────────────────────────────────── */
+.btn-shimmer {
+  background: linear-gradient(90deg, #C9A84C 0%, #E8C96A 50%, #C9A84C 100%);
+  background-size: 200% auto;
+  transition: background-position 0.6s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(201,168,76,0.35),
+              0 1px 0 rgba(255,255,255,0.2) inset;
+}
+.btn-shimmer:hover {
+  background-position: right center;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(201,168,76,0.5),
+              0 1px 0 rgba(255,255,255,0.2) inset;
+}
+.btn-shimmer:active { transform: translateY(0); }
+
+/* ── GRADIENT TEXT ────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, #E8C96A 0%, #C9A84C 50%, #00C9B1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gold-text {
+  background: linear-gradient(135deg, #F0D878, #C9A84C, #9A7828);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.teal-text {
+  background: linear-gradient(135deg, #00EDD1, #00C9B1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── SECTION HELPERS ──────────────────────────────────── */
+.section-padding { padding: 5rem 1rem; }
+@media (min-width: 768px) { .section-padding { padding: 6rem 2rem; } }
+
+/* ── SWIPER ───────────────────────────────────────────── */
+.swiper-pagination-bullet { background: rgba(255,255,255,0.4) !important; }
+.swiper-pagination-bullet-active { background: var(--gold) !important; }
+.swiper-button-next, .swiper-button-prev { color: var(--gold) !important; }
+
+/* ── REACT-DATEPICKER ─────────────────────────────────── */
+.react-datepicker {
+  background: var(--bg-raised) !important;
+  border: 1px solid rgba(201,168,76,0.25) !important;
+  border-radius: 14px !important;
+  font-family: var(--font-nunito) !important;
+  box-shadow: 12px 12px 24px var(--neo-dark), -6px -6px 16px var(--neo-light) !important;
+}
+.react-datepicker__header { background: var(--bg-deep) !important; border-bottom: 1px solid rgba(201,168,76,0.15) !important; }
+.react-datepicker__current-month, .react-datepicker__day-name { color: var(--gold) !important; }
+.react-datepicker__day { color: white !important; border-radius: 8px !important; }
+.react-datepicker__day:hover { background: var(--gold) !important; color: var(--bg-deep) !important; }
+.react-datepicker__day--selected { background: var(--gold) !important; color: var(--bg-deep) !important; font-weight: 700 !important; }
+.react-datepicker__day--disabled { color: rgba(255,255,255,0.2) !important; }
+.react-datepicker__navigation-icon::before { border-color: var(--gold) !important; }
+.react-datepicker__input-container input { background: transparent; border: none; color: white; font-family: var(--font-nunito); width: 100%; cursor: pointer; outline: none; font-size: 14px; }
+
+/* ── THEME TINT OVERLAY ───────────────────────────────── */
+/* Applied as a full-page color overlay — works on ALL elements */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9997;
+  background: var(--theme-tint, transparent);
+  mix-blend-mode: soft-light;
+  opacity: var(--theme-tint-opacity, 0);
+  transition: background 0.6s ease, opacity 0.6s ease;
+}
+
+/* ── SCROLL ANIMATIONS ────────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+
+/* ── FLOATING PARTICLES ───────────────────────────────── */
+@keyframes float-particle {
+  0%   { transform: translateY(0px) scale(1);    opacity: 0; }
+  8%   { opacity: 0.8; }
+  85%  { opacity: 0.4; }
+  100% { transform: translateY(-520px) scale(0.4); opacity: 0; }
+}
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: float-particle linear infinite;
+}
+
+/* ── ANIMATED GRADIENT BORDER ON CARDS ───────────────── */
+@keyframes spin-border {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+.card-glow-wrap {
+  position: relative;
+  border-radius: 22px;
+}
+.card-glow-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 23px;
+  background: linear-gradient(135deg, #00C9B1, #C9A84C, #0096C7, #00EDD1, #C9A84C);
+  background-size: 300% 300%;
+  animation: spin-border 4s ease infinite;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.card-glow-wrap:hover::before { opacity: 1; }
+
+/* ── PULSING CTA GLOW ─────────────────────────────────── */
+@keyframes pulse-gold {
+  0%,100% { box-shadow: 0 4px 20px rgba(201,168,76,0.35), 0 1px 0 rgba(255,255,255,0.2) inset; }
+  50%      { box-shadow: 0 6px 40px rgba(201,168,76,0.65), 0 0 70px rgba(201,168,76,0.2), 0 1px 0 rgba(255,255,255,0.2) inset; }
+}
+.btn-shimmer { animation: pulse-gold 3s ease-in-out infinite; }
+.btn-shimmer:hover { animation: none; }
+
+/* ── OCEAN WAVE SECTION DIVIDER ───────────────────────── */
+@keyframes wave-move {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.wave-top {
+  position: absolute;
+  top: -2px; left: 0;
+  width: 200%; height: 60px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60'%3E%3Cpath fill='%23071A2D' d='M0,30 C240,55 480,5 720,30 C960,55 1200,5 1440,30 L1440,60 L0,60 Z'/%3E%3C/svg%3E");
+  background-size: 50% 100%;
+  animation: wave-move 8s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+.wave-bottom {
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 200%; height: 60px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60'%3E%3Cpath fill='%23071A2D' d='M0,30 C240,5 480,55 720,30 C960,5 1200,55 1440,30 L1440,0 L0,0 Z'/%3E%3C/svg%3E");
+  background-size: 50% 100%;
+  animation: wave-move 10s linear infinite reverse;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── SHIMMER LINE ANIMATION ───────────────────────────── */
+@keyframes shimmer-line {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.shimmer-line {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+  animation: shimmer-line 2.5s ease-in-out infinite;
+}
+
+/* ── TEAL GLOW TEXT ───────────────────────────────────── */
+.glow-teal-text {
+  text-shadow: 0 0 20px rgba(0,201,177,0.6), 0 0 40px rgba(0,201,177,0.2);
+}
+.glow-gold-text {
+  text-shadow: 0 0 20px rgba(201,168,76,0.5), 0 0 40px rgba(201,168,76,0.2);
+}
+
+/* ── 3D CARD PERSPECTIVE ──────────────────────────────── */
+.perspective-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+/* ── FAQ ACCORDION ─────────────────────────────────────── */
+.faq-item { border-bottom: 1px solid rgba(255,255,255,0.07); }
+.faq-item:last-child { border-bottom: none; }
+
+/* ── SECTION BADGE ─────────────────────────────────────── */
+.badge-daily {
+  background: linear-gradient(135deg, rgba(0,201,177,0.2), rgba(0,150,199,0.2));
+  border: 1px solid rgba(0,201,177,0.4);
+  color: #00C9B1;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+/* ── SCROLL REVEAL BLUR ───────────────────────────────── */
+@keyframes reveal-blur {
+  0%   { opacity: 0; filter: blur(8px); transform: translateY(24px); }
+  100% { opacity: 1; filter: blur(0);  transform: translateY(0); }
+}
+.reveal-blur { animation: reveal-blur 0.7s ease-out forwards; }
