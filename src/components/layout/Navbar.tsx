@@ -52,7 +52,7 @@ export default function Navbar() {
                   style={{ border: '2px solid rgba(201,168,76,0.4)', boxShadow: '0 0 12px rgba(201,168,76,0.25)' }}>
                   <Image
                     src="/logoomp.JPG"
-                    alt="OMP Tours & Transfers
+                    alt="OMP Tours & Transfers"
                     width={44}
                     height={44}
                     className="w-full h-full object-cover"
@@ -62,7 +62,7 @@ export default function Navbar() {
               </motion.div>
               <div>
                 <p className="font-bold text-white text-sm leading-tight" style={{ fontFamily: 'Playfair Display, serif' }}>
-                  OMP Tours &amp; Transfer
+                  OMP Tours &amp; Transfers
                 </p>
                 <p className="text-[10px] tracking-[2px] uppercase" style={{ color: '#C9A84C' }}>
                   Higüey · Punta Cana
