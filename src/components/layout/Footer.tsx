@@ -70,7 +70,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               <a
-                href="https://www.instagram.com/"
+                href="https://www.instagram.com/omptourstransfer?igsh=MWx4YnFhM3pzZmFhYg=="
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#00C9A7] hover:text-[#071929] transition-all"
@@ -78,7 +78,7 @@ export default function Footer() {
                 <Instagram size={16} />
               </a>
               <a
-                href="https://www.facebook.com/"
+                href="https://www.facebook.com/share/1BMKph7zZa/?mibextid=wwXIfr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#00C9A7] hover:text-[#071929] transition-all"
