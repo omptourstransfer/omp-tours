@@ -73,7 +73,7 @@ const INSTANT: { keys: string[]; answer: string }[] = [
   },
   {
     keys: ['cancel', 'refund', 'reschedule', 'change date', 'cancelar'],
-    answer: `✅ **Cancellation & Rescheduling**\n\nWe understand plans change!\n\n• Cancel/reschedule **24+ hrs before** → No charge, full reschedule\n• Contact us via WhatsApp ASAP\n\n📱 WhatsApp: +1 (809) 431-2542\n📧 Email: info@omptours-travel.com\n\nWe'll always do our best to accommodate you! 🌴`,
+    answer: `✅ **Cancellation & Rescheduling**\n\nWe understand plans change!\n\n• Cancel/reschedule **24+ hrs before** → No charge, full reschedule\n• Contact us via WhatsApp ASAP\n\n📱 WhatsApp: +1 (809) 431-2542\n📧 Email: bookings@omptoursandtransfers.com\n\nWe'll always do our best to accommodate you! 🌴`,
   },
   {
     keys: ['007', 'combo', 'package deal', 'best tour', 'best value'],

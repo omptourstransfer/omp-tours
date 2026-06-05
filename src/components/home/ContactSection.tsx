@@ -50,8 +50,8 @@ export default function ContactSection() {
               {
                 icon: Mail,
                 label: 'Email',
-                value: 'info@omptours-travel.com',
-                href: 'mailto:info@omptours-travel.com',
+                value: 'bookings@omptoursandtransfers.com',
+                href: 'mailto:bookings@omptoursandtransfers.com',
                 color: '#F0A500',
               },
               {

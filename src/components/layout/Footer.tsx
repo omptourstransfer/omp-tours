@@ -60,7 +60,7 @@ export default function Footer() {
               </div>
               <div>
                 <div className="font-bold text-white leading-tight" style={{ fontFamily: 'Playfair Display, serif' }}>
-                  OMP Tours &amp; Transfer
+                  OMP Tours &amp; Transfers
                 </div>
                 <div className="text-[#00C9A7] text-xs">Higüey, Punta Cana</div>
               </div>
@@ -168,10 +168,10 @@ export default function Footer() {
               <li className="flex items-center gap-3">
                 <Mail size={16} className="text-[#00C9A7] flex-shrink-0" />
                 <a
-                  href="mailto:info@omptours-travel.com"
+                  href="mailto:bookings@omptoursandtransfers.com"
                   className="text-white/60 text-sm hover:text-[#00C9A7] transition-colors"
                 >
-                  info@omptours-travel.com
+                  bookings@omptoursandtransfers.com
                 </a>
               </li>
             </ul>

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: '%s | OMP Tours & Transfers',
   },
   description:
-    'Book the best Punta Cana excursions with OMP Tours & Transfers Saona Island tours, buggy adventures, ATV, whale watching, scuba diving & 31 more. Only 15% deposit online. Hotel pickup included. 5-star rated by 10,000+ guests.',
+    'Book the best Punta Cana excursions with OMP Tours & Transfers. Saona Island tours, buggy adventures, ATV, whale watching, scuba diving & 31 more. Only 15% deposit online. Hotel pickup included. 5-star rated by 10,000+ guests.',
   keywords: [
     'Punta Cana excursions',
     'OMP Tours',
@@ -71,7 +71,7 @@ const jsonLd = {
   description: 'Best Punta Cana excursions — Saona Island tours, buggy adventures, ATV, whale watching, scuba diving & 31 more. 5-star rated, hotel pickup included.',
   url: SITE_URL,
   telephone: '+18094312542',
-  email: 'info@omptours-travel.com',
+  email: 'bookings@omptoursandtransfers.com',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Higüey',

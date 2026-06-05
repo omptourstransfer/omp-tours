@@ -30,6 +30,8 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
   const [pickupTime, setPickupTime] = useState<'9:00AM' | '2:00PM'>('9:00AM');
   const [tourDetails, setTourDetails] = useState<Record<number, TourBookingDetails>>({});
   const [bookingRefs, setBookingRefs] = useState<string[]>([]);
+  const [finalDeposit, setFinalDeposit] = useState(0);
+  const [finalCash, setFinalCash] = useState(0);
 
   const getDetails = (id: number): TourBookingDetails =>
     tourDetails[id] || { date: null, adults: 1 };
@@ -53,7 +55,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
   const allDatesSelected = items.every(i => getDetails(i.tour.id).date !== null);
   const canCheckout = guestName.trim() && guestEmail.trim() && allDatesSelected;
 
-  const generateRef = () => 'OMP-' + Date.now().toString(36).toUpperCase();
+  const generateRef = (idx: number) => 'OMP-' + (Date.now() + idx).toString(36).toUpperCase();
 
   const sendConfirmations = async (refs: string[]) => {
     try {
@@ -63,29 +65,33 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
       if (!emailjsServiceId || !emailjsTemplateId || !emailjsPublicKey) return;
       const { default: emailjs } = await import('@emailjs/browser');
 
-      for (let idx = 0; idx < items.length; idx++) {
-        const item = items[idx];
+      // Build one combined summary for all tours
+      const toursSummary = items.map((item, idx) => {
         const det = getDetails(item.tour.id);
         const deposit = Math.ceil(item.tour.price * 0.15);
         const cash = Math.ceil(item.tour.price * 0.85);
         const totalDep = item.tour.isPackage ? deposit : deposit * det.adults;
         const totalCashItem = item.tour.isPackage ? cash : cash * det.adults;
-        const payload = {
-          booking_ref: refs[idx],
-          tour_name: item.tour.name,
-          tour_date: det.date?.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
-          pickup_time: pickupTime,
-          guest_name: guestName,
-          guest_email: guestEmail,
-          adults: item.tour.isPackage ? 'Package' : String(det.adults),
-          deposit_paid: `$${totalDep.toFixed(2)}`,
-          cash_balance: `$${totalCashItem.toFixed(2)}`,
-          to_email: guestEmail,
-          reply_to: guestEmail,
-        };
-        await emailjs.send(emailjsServiceId, emailjsTemplateId, payload, emailjsPublicKey);
-        await emailjs.send(emailjsServiceId, emailjsTemplateId, { ...payload, to_email: 'info@omptours-travel.com' }, emailjsPublicKey);
-      }
+        return `${idx + 1}. ${item.tour.name} | ${det.date?.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} | ${item.tour.isPackage ? 'Package' : det.adults + ' guests'} | Ref: ${refs[idx]} | Deposit: $${totalDep.toFixed(2)} | Cash due: $${totalCashItem.toFixed(2)}`;
+      }).join('\n');
+
+      const payload = {
+        booking_ref: refs.join(', '),
+        tour_name: toursSummary,
+        tour_date: 'See tour details below',
+        pickup_time: pickupTime,
+        guest_name: guestName,
+        guest_email: guestEmail,
+        adults: String(items.reduce((s, i) => s + getDetails(i.tour.id).adults, 0)),
+        deposit_paid: `$${totalDeposit.toFixed(2)}`,
+        cash_balance: `$${totalCash.toFixed(2)}`,
+        to_email: guestEmail,
+        reply_to: guestEmail,
+      };
+      // One email to customer
+      await emailjs.send(emailjsServiceId, emailjsTemplateId, payload, emailjsPublicKey);
+      // One email to Orlando
+      await emailjs.send(emailjsServiceId, emailjsTemplateId, { ...payload, to_email: 'bookings@omptoursandtransfers.com' }, emailjsPublicKey);
     } catch { /* non-critical */ }
   };
 
@@ -110,6 +116,8 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
     setPickupTime('9:00AM');
     setTourDetails({});
     setBookingRefs([]);
+    setFinalDeposit(0);
+    setFinalCash(0);
   };
 
   return (
@@ -118,7 +126,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
         {open && (
           <>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              onClick={onClose} className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm" />
+              onClick={() => { if (step !== 'confirmed') resetDrawer(); onClose(); }} className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm" />
 
             <motion.aside initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 28, stiffness: 260 }}
@@ -142,7 +150,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                   {step === 'checkout' && (
                     <button onClick={() => setStep('cart')} className="text-white/40 hover:text-white text-xs transition-colors">← Back</button>
                   )}
-                  <button onClick={onClose} className="text-white/50 hover:text-white transition-colors"><X size={20} /></button>
+                  <button onClick={() => { if (step !== 'confirmed') resetDrawer(); onClose(); }} className="text-white/50 hover:text-white transition-colors"><X size={20} /></button>
                 </div>
               </div>
 
@@ -178,7 +186,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                   <div className="px-4 pb-6 pt-3 border-t border-white/10 space-y-3">
                     <div className="flex justify-between items-center">
                       <span className="text-white/50 text-sm">Total deposit (15%):</span>
-                      <span className="text-[#C9A84C] font-bold text-lg">${totalDeposit}</span>
+                      <span className="text-[#C9A84C] font-bold text-lg">${totalDeposit.toFixed(2)}</span>
                     </div>
                     <button onClick={() => setStep('checkout')}
                       className="w-full flex items-center justify-center gap-2 btn-shimmer text-[#071929] font-bold py-3.5 rounded-2xl">
@@ -283,8 +291,10 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                         onApprove={async (_, actions) => {
                           if (actions.order) {
                             await actions.order.capture();
-                            const refs = items.map(() => generateRef());
+                            const refs = items.map((_, idx) => generateRef(idx));
                             setBookingRefs(refs);
+                            setFinalDeposit(totalDeposit);
+                            setFinalCash(totalCash);
                             await sendConfirmations(refs);
                             sendWhatsApp(refs);
                             clearCart();
@@ -307,15 +317,24 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                   </div>
                   <h3 className="text-white font-bold text-xl" style={{ fontFamily: 'Playfair Display, serif' }}>All Bookings Confirmed! 🎉</h3>
                   <p className="text-white/60 text-sm">Confirmation sent to <strong className="text-white">{guestEmail}</strong></p>
+                  {bookingRefs.length > 0 && (
+                    <div className="text-left space-y-1">
+                      {bookingRefs.map((ref, idx) => (
+                        <p key={ref} className="text-xs text-white/50">
+                          <span className="text-[#00C9A7] font-bold">Ref {idx + 1}:</span> {ref}
+                        </p>
+                      ))}
+                    </div>
+                  )}
 
                   <div className="glass rounded-xl p-4 text-left space-y-2 border border-[#00C9A7]/20">
                     <p className="text-[#00C9A7] text-xs font-bold uppercase">Payment Summary</p>
-                    <div className="flex justify-between text-sm"><span className="text-white/60">✅ Deposit paid:</span><span className="text-[#00C9A7] font-bold">${totalDeposit.toFixed(2)}</span></div>
-                    <div className="flex justify-between text-sm"><span className="text-white/80">💵 Cash due on tour days:</span><span className="text-[#F0A500] font-bold">${totalCash.toFixed(2)}</span></div>
+                    <div className="flex justify-between text-sm"><span className="text-white/60">✅ Deposit paid:</span><span className="text-[#00C9A7] font-bold">${finalDeposit.toFixed(2)}</span></div>
+                    <div className="flex justify-between text-sm"><span className="text-white/80">💵 Cash due on tour days:</span><span className="text-[#F0A500] font-bold">${finalCash.toFixed(2)}</span></div>
                   </div>
 
                   <div className="p-3 rounded-xl text-xs" style={{ background: 'rgba(240,165,0,0.1)', border: '1px solid rgba(240,165,0,0.3)', color: '#F0A500' }}>
-                    ⚠️ You still owe <strong>${totalCash.toFixed(2)}</strong> in cash to your guide on tour day.
+                    ⚠️ You still owe <strong>${finalCash.toFixed(2)}</strong> in cash to your guide on tour day.
                   </div>
 
                   <a href={`https://wa.me/18094312542`} target="_blank"

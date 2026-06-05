@@ -67,7 +67,7 @@ export default function BookingWidget({ tour }: BookingWidgetProps) {
           adults: adultsStr,
           deposit_paid: `$${totalDeposit.toFixed(2)}`,
           cash_balance: `$${cashBalance.toFixed(2)}`,
-          to_email: 'info@omptours-travel.com',
+          to_email: 'bookings@omptoursandtransfers.com',
           reply_to: guestEmail,
         };
         // Send to Orlando

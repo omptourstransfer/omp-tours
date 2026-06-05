@@ -31,7 +31,7 @@ export default function ContactPage() {
             phone: form.phone,
             tour_interest: form.tour,
             message: form.message,
-            to_email: 'info@omptours-travel.com',
+            to_email: 'bookings@omptoursandtransfers.com',
           },
           emailjsPublicKey
         );
@@ -80,7 +80,7 @@ export default function ContactPage() {
           >
             {[
               { icon: Phone, label: 'Phone & WhatsApp', value: '+1 (809) 431-2542', href: 'tel:+18094312542', color: '#00C9A7' },
-              { icon: Mail, label: 'Email', value: 'info@omptours-travel.com', href: 'mailto:info@omptours-travel.com', color: '#F0A500' },
+              { icon: Mail, label: 'Email', value: 'bookings@omptoursandtransfers.com', href: 'mailto:bookings@omptoursandtransfers.com', color: '#F0A500' },
               { icon: MapPin, label: 'Our Location', value: 'Av. Estados Unidos, Higüey 23301, Dominican Republic', href: 'https://maps.app.goo.gl/yHkMvcHhooLJgJE68', color: '#00C9A7' },
               { icon: Clock, label: 'Tour Pickup Times', value: '9:00 AM & 2:00 PM daily', href: null, color: '#F0A500' },
             ].map((item) => (
